@@ -1,5 +1,5 @@
 const { saveProduct, readFile } = require('./file/manageFile');
-const { selectOption, inputCreateProduct } = require('./inquirer/inquirerProductos');
+const { selectOption, inputCreateProduct, listProductSave } = require('./inquirer/inquirerProductos');
 const Products = require('./model/Products');
 
 require('colors');
@@ -13,14 +13,21 @@ const main = async ()=>{
         switch(option){
             case '1':
                 const product = await inputCreateProduct();
-                const response = await saveProduct(`${product}`);
-                console.log(response)
+                const resSave = await saveProduct(product);
+                console.log(resSave)
                 
                 break;
            
             case '2':
                 const productsFile = await readFile();
                 products.listProduct(productsFile);
+            break;
+
+            case '3':
+                const productsUpdateFile = await readFile();
+                const selectProduct = await listProductSave(productsUpdateFile);            
+                const resUpdate = await products.updateProduct(selectProduct);
+                console.log(resUpdate);
             break;
         }
 

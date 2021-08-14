@@ -1,2 +1,20 @@
-[{"name":"Arroz","category":"Canasta Familiar","quality":4,"price":4000},
-    {"name":"Leche","category":"Lechesam","quantity":4,"price":50000}]
+[
+    {
+        "name": "agasg",
+        "category": "hhsd",
+        "quality": 4,
+        "price": 345
+    },
+    {
+        "name": "gags",
+        "category": "gasg",
+        "quality": 34,
+        "price": 351523
+    },
+    {
+        "name": "asg",
+        "category": "jjjj",
+        "quality": 3,
+        "price": 346663
+    }
+]

@@ -1,6 +1,6 @@
 class Products{
 
-    listProduct(products){
+    listProduct(products=[]){
 
         console.log('/**** Lista de productos ****/');
         products.forEach(product => {
@@ -12,6 +12,11 @@ Precio: ${product.price}
 `)
         console.log('-------------------------------');
         });
+    }
+
+
+    async updateProduct(product){
+       // console.log(product);
     }
 }
 

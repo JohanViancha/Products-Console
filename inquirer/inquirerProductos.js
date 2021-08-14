@@ -86,7 +86,30 @@ const inputCreateProduct = async ()=>{
 }
 
 
+const listProductSave = async (products = [])=>{
+
+    let cont = 0;
+    const lisProduct = products.map((product)=>{
+        cont++;
+        return product[cont];
+    })
+
+    console.log(lisProduct);
+    
+    const question = {
+        type:'list',
+        name:'option',
+        message:'Selecciona una opción',
+        choices:products
+    }
+
+    const option = await inquirer.prompt(question);
+    return option;
+}
+
+
 module.exports = {
     selectOption,
-    inputCreateProduct
+    inputCreateProduct,
+    listProductSave
 }

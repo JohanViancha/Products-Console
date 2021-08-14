@@ -1,19 +1,15 @@
 const fs = require('fs');
-const { encode } = require('punycode');
 
 
 const path = './cellar/inventory.json';
 
 
-const saveProduct =  async(product)=>{
+const  saveProduct =  async(product)=>{
+    let productsFile = [];
     try{
-        const productsFile = await readFile();
-        console.log(product);
-        productsFile.push(product);    
-        console.log(productsFile);
-            /*
-        console.log(productsFile);
-        fs.writeFileSync(path,productsFile);*/
+        productsFile = await readFile();  
+        productsFile.push(product);
+        fs.writeFileSync(path,JSON.stringify(productsFile));
         return 'Producto guardado';
     }catch(error){
         return error;
@@ -22,8 +18,16 @@ const saveProduct =  async(product)=>{
 }
 
 const readFile = async ()=>{
-    const products = fs.readFileSync(path,{encoding:'utf8', flag:'r'});
-    return JSON.parse(products);
+    const products = JSON.parse(fs.readFileSync(path,{encoding:'utf-8'}));
+    let listProducts = [];
+    if(products){
+        products.forEach(element => {
+            listProducts.push(element);
+        });
+        return listProducts;
+    }else{
+        return new Array();
+    }
 }
 
 module.exports = {saveProduct, readFile}
