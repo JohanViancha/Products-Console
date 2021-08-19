@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+require('colors');
 
 const path = './cellar/inventory.json';
 
@@ -7,10 +7,9 @@ const path = './cellar/inventory.json';
 const  saveProduct =  async(product)=>{
     try{
         productsFile = await readFile();
-        console.log()  
         productsFile.push(product);
         fs.writeFileSync(path,JSON.stringify(productsFile));
-        return 'Producto guardado';
+        return 'Producto guardado'.green;
     }catch(error){
         return error;
     }
@@ -19,7 +18,6 @@ const  saveProduct =  async(product)=>{
 
 const readFile = async ()=>{
     const data = fs.readFileSync(path,{encoding:'utf-8'});
-    console.log(data.length);
     if(data.length>0){
         const products = JSON.parse(data);
         let listProducts = [];
@@ -34,28 +32,48 @@ const readFile = async ()=>{
 }
 
 const updateFile = async(product)=>{
-    const data = JSON.parse(fs.readFileSync(path,{encoding:'utf-8'}));
-    console.log(data);
-    const productFile = data.map(element=>{
-        if(product.id == element.id){
-            console.log('Entro');
-            return {
-                id:product.id,
-                name:product.name,
-                category:product.category,
-                quality:product.quality,
-                price:product.price
-    
-            }
-        }else{
-            return element;
-        }
+    try{
+        const data = JSON.parse(fs.readFileSync(path,{encoding:'utf-8'}));
+        const productFile = data.map(element=>{
+            if(product.id == element.id){
+                return {
+                    id:product.id,
+                    name:product.name,
+                    category:product.category,
+                    quality:product.quality,
+                    price:product.price
         
-       
-    });
-    await fs.writeFileSync(path,JSON.stringify(''));
-    fs.writeFileSync(path,JSON.stringify(productFile));
+                }
+            }else{
+                return element;
+            }
+            
+        
+        });
+        await fs.writeFileSync(path,JSON.stringify(''));
+        fs.writeFileSync(path,JSON.stringify(productFile));
+
+        return true;
+    }catch(error){
+        console.log(error);
+        return false;
+    }
+}
+
+
+    const deleteFile = async(product)=>{
+        try{
+            const data = JSON.parse(fs.readFileSync(path,{encoding:'utf-8'}));
+            const indexDelete = data.findIndex(element=>product.id === element.id);
+            data.splice(indexDelete, 1);
+            await fs.writeFileSync(path,JSON.stringify(''));
+            fs.writeFileSync(path,JSON.stringify(data));
+            return true;
+        }catch(error){
+            console.log(error);
+            return false;
+        }
 
 }
 
-module.exports = {saveProduct, readFile,updateFile}
+module.exports = {saveProduct, readFile,updateFile,deleteFile}

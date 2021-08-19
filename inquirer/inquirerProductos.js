@@ -41,8 +41,6 @@ const selectOption = async()=>{
 
 const inputCreateProduct = async (newAction, productSelect = [])=>{
     console.clear();
-
-    console.log(productSelect);
     console.log('Ingrese la información del producto');
     const create = {
         type:'input',
@@ -109,7 +107,6 @@ const listProductSave = async (products = [])=>{
         };
     })
 
-    console.log(listProduct);
     const questionSave = {
         type:'list',
         name:'option',
@@ -122,9 +119,21 @@ const listProductSave = async (products = [])=>{
     return productSelect;
 }
 
+const confirm = async()=>{
+    const confirm = {
+        type:'confirm',
+        name:'response',
+        message:'¿Está seguro que desea eliminar el producto?'
+    }
+
+    const {response} = await inquirer.prompt(confirm);
+    return response;
+}
+
 
 module.exports = {
     selectOption,
     inputCreateProduct,
-    listProductSave
+    listProductSave,
+    confirm
 }
